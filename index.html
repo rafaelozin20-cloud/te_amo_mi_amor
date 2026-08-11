@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acceso Restringido</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#050505;
+    color:#00ff88;
+    font-family:Consolas, monospace;
+    overflow:hidden;
+}
+
+.screen{
+    width:100vw;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
+
+.hidden{
+    display:none;
+}
+
+#terminal{
+    font-size:1.2rem;
+    white-space:pre-line;
+    text-align:left;
+    width:80%;
+    max-width:900px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(4,100px);
+    gap:15px;
+}
+
+.box{
+    width:100px;
+    height:100px;
+    background:#111;
+    border:2px solid #00ff88;
+    cursor:pointer;
+    font-size:2rem;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    transition:.3s;
+}
+
+.box:hover{
+    transform:scale(1.08);
+}
+
+#result{
+    margin-top:30px;
+    font-size:1.5rem;
+}
+
+#letterPage{
+    background:
+    radial-gradient(circle at center,#111,#000);
+    color:white;
+    overflow:auto;
+    padding:50px;
+}
+
+.letter{
+
+    background:white;
+    color:#222;
+    width:90%;
+    max-width:900px;
+
+    padding:50px;
+    border-radius:20px;
+
+    box-shadow:
+    0 0 40px rgba(255,255,255,.2);
+
+    animation:openLetter 1.5s ease;
+}
+
+@keyframes openLetter{
+
+    from{
+        transform:scale(.2) rotateX(90deg);
+        opacity:0;
+    }
+
+    to{
+        transform:scale(1);
+        opacity:1;
+    }
+
+}
+
+.letter h1{
+    color:#ff4f81;
+    margin-bottom:20px;
+}
+
+.letter p{
+    font-size:1.2rem;
+    line-height:1.8;
+}
+
+.bigline{
+    font-size:2rem;
+    text-align:center;
+    color:#ff4f81;
+    margin:35px 0;
+    font-weight:bold;
+}
+
+.btn{
+    margin-top:40px;
+    padding:18px 35px;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:1.2rem;
+    background:#ff4f81;
+    color:white;
+}
+
+.heart{
+    position:fixed;
+    font-size:30px;
+    pointer-events:none;
+    animation:float 4s linear forwards;
+}
+
+@keyframes float{
+
+    from{
+        transform:translateY(0);
+        opacity:1;
+    }
+
+    to{
+        transform:translateY(-600px);
+        opacity:0;
+    }
+
+}
+
+</style>
+</head>
+<body>
+
+<!-- INTRO -->
+
+<div id="intro" class="screen">
+
+    <div id="terminal"></div>
+
+</div>
+
+<!-- JUEGO -->
+
+<div id="game" class="screen hidden">
+
+    <h1 style="margin-bottom:30px;">
+        ❤️ Encuentra el Corazón ❤️
+    </h1>
+
+    <div class="grid" id="grid"></div>
+
+    <div id="result"></div>
+
+</div>
+
+<!-- CARTA -->
+
+<div id="letterPage"
+class="screen hidden">
+
+<div class="letter">
+
+<h1>Daniela ❤️</h1>
+
+<p>
+Han sido días muy difíciles por la forma en que se dieron las cosas,
+y quiero que sepas que reconozco la gran fortaleza que has tenido para mantener la calma.
+</p>
+
+<br>
+
+<p>
+Gracias por ser fuerte.
+Gracias por tomar la iniciativa cuando fue necesario.
+</p>
+
+<br>
+
+<p>
+De mi parte, me agarré los tanates y me puse a trabajar como animal.
+Avancé mucho y, aunque todavía me falta por terminar,
+hay algo que tengo muy claro:
+</p>
+
+<div class="bigline">
+Mañana es un día que no permito
+que nadie me quite de tu lado.
+</div>
+
+<p>
+Y por eso quiero preguntarte algo...
+</p>
+
+<div class="bigline">
+¿Te gustaría tener una cita conmigo? ♥
+</div>
+
+<center>
+
+<button class="btn"
+onclick="aceptar()">
+
+❤️ Sí, acepto ❤️
+
+</button>
+
+</center>
+
+</div>
+
+</div>
+
+<script>
+
+/* INTRO */
+
+const lines = [
+
+"INICIANDO SISTEMA...",
+"ESTABLECIENDO CONEXION...",
+"ESCANEANDO UNIVERSO...",
+"8,145,993,221 PERSONAS ANALIZADAS...",
+"",
+"RESULTADO:",
+"",
+"DANIELA ❤️",
+"",
+"ACCESO AUTORIZADO"
+
+];
+
+let i=0;
+
+function typeLine(){
+
+    if(i<lines.length){
+
+        terminal.innerHTML +=
+        lines[i] + "<br>";
+
+        i++;
+
+        setTimeout(typeLine,900);
+
+    }else{
+
+        setTimeout(()=>{
+
+            intro.classList.add("hidden");
+            game.classList.remove("hidden");
+
+        },2000);
+
+    }
+
+}
+
+typeLine();
+
+/* JUEGO */
+
+const grid =
+document.getElementById("grid");
+
+const ganador =
+Math.floor(Math.random()*16);
+
+for(let i=0;i<16;i++){
+
+    const box =
+    document.createElement("div");
+
+    box.className="box";
+    box.innerHTML="🎁";
+
+    box.onclick=()=>{
+
+        if(i===ganador){
+
+            box.innerHTML="❤️";
+
+            result.innerHTML=
+            "❤️ CORAZÓN ENCONTRADO ❤️";
+
+            setTimeout(()=>{
+
+                game.classList.add("hidden");
+                letterPage.classList.remove("hidden");
+
+            },2000);
+
+        }else{
+
+            box.innerHTML="❌";
+
+        }
+
+    }
+
+    grid.appendChild(box);
+
+}
+
+/* FINAL */
+
+function aceptar(){
+
+    for(let i=0;i<80;i++){
+
+        setTimeout(()=>{
+
+            let h =
+            document.createElement("div");
+
+            h.className="heart";
+            h.innerHTML="❤️";
+
+            h.style.left =
+            Math.random()*100+"vw";
+
+            h.style.bottom="0";
+
+            document.body.appendChild(h);
+
+            setTimeout(()=>{
+                h.remove();
+            },4000);
+
+        },i*80);
+
+    }
+
+    setTimeout(()=>{
+
+        const asunto =
+        encodeURIComponent(
+        "❤️ Mi respuesta ❤️"
+        );
+
+        const cuerpo =
+        encodeURIComponent(
+        "Sí, acepto la invitación ❤️"
+        );
+
+        window.location.href =
+        `mailto:rafainteg@gmail.com?subject=${asunto}&body=${cuerpo}`;
+
+    },3000);
+
+}
+
+</script>
+
+</body>
+</html>
