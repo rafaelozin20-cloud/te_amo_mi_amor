@@ -314,7 +314,7 @@ Y por eso quiero preguntarte algo...
 
 <img src="assets/chiikawa.gif">
 
-<h2>❤️ Llego por tí a las 7:00 pm mi amor ❤️</h2>
+<h2>❤️ Llego por tí mañana a las 7:00 pm mi amor ❤️</h2>
 
 <div id="countdown"></div>
 
@@ -561,28 +561,16 @@ function iniciarContador(){
         const diferencia =
         destino - ahora;
 
-        if(diferencia <= 0){
+   if(diferencia <= 0){
 
-            clearInterval(timer);
+       clearInterval(timer);
 
-            countdown.innerHTML =
-            "❤️ ES HORA DE LA CITA ❤️";
+       countdown.innerHTML =
+       "❤️ ES HORA DE LA CITA ❤️";
 
-            setTimeout(()=>{
+       return;
 
-                const asunto =
-                encodeURIComponent(
-                "Sí Rafa, quiero salir contigo ❤️"
-                );
-
-                window.location.href =
-                `mailto:rafainteg@gmail.com?subject=${asunto}`;
-
-            },5000);
-
-            return;
-
-        }
+}
 
         const dias =
         Math.floor(
