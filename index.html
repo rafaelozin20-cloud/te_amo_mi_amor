@@ -444,13 +444,15 @@ function crearJuego(){
                 ¿QUIEN JALO MI CABELLO? ∞%
                 `;
 
-                setTimeout(() => {
+               setTimeout(() => {
 
-                    game.classList.add("hidden");
-                    letterPage.classList.remove("hidden");
+                 musica1.pause();
+                 musica1.currentTime = 0;
 
-                }, 3000);
+                 game.classList.add("hidden");
+                 letterPage.classList.remove("hidden");
 
+               }, 3000);
             }else{
 
                 const foto = fotos[indiceFoto];
