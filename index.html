@@ -206,7 +206,41 @@ font-size:1.5rem;
 <source src="musica/cancion2.mp3" type="audio/mpeg">
 </audio>
 
-<div id="intro" class="screen">
+<div id="startScreen" class="screen">
+
+    <div style="
+    background:rgba(255,255,255,0.92);
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 0 30px rgba(0,0,0,0.4);
+    max-width:600px;
+    ">
+
+        <h1 style="
+        color:black;
+        margin-bottom:15px;
+        ">
+        ❤️ Para mi Daniela ❤️
+        </h1>
+
+        <p style="
+        color:#333;
+        margin-bottom:25px;
+        ">
+        Tengo algo especial para ti...
+        </p>
+
+        <button class="btn"
+        onclick="iniciarExperiencia()">
+            ▶ Iniciar Experiencia
+        </button>
+
+    </div>
+
+</div>
+
+<div id="intro" class="screen hidden">
 <div id="terminal"></div>
 </div>
 
@@ -295,13 +329,19 @@ const result = document.getElementById("result");
 const musica1 = document.getElementById("musica1");
 const musica2 = document.getElementById("musica2");
 
-/* AUDIO */
+function iniciarExperiencia(){
 
-document.addEventListener("click", () => {
+    document
+    .getElementById("startScreen")
+    .classList.add("hidden");
+
+    intro.classList.remove("hidden");
 
     musica1.play().catch(()=>{});
 
-}, { once:true });
+}
+
+/* AUDIO */
 
 /* INTRO HACKER */
 
